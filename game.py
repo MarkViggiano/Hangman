@@ -26,7 +26,10 @@ class Game():
         ready = False
         print("Enter player names to play, when your finished type: 'play':")
         while not ready:
-            name = input();
+            name = input()
+            if len(name) == 0:
+                print("Type a name of a player to add or type 'play' to play!")
+                continue
             if (name.lower() == "play"):
                 for player in self.players:
                     print("Registered Player: {}".format(player.getName()))
@@ -117,7 +120,7 @@ class Game():
             cardCount += 1
 
     def getNextSelectedCard(self):
-        if self.cards[0] == self.cardSelected:
+        if self.cards[0] == self.topCard:
             return self.cards[1]
 
         return self.cards[0]
@@ -190,7 +193,6 @@ class Game():
                         self.activePlayer.removeCard(card)
                         card.onPlay(self)
                         self.movePosition()
-                        self.cards.remove(card)
                         time.sleep(5)
                         self.clearConsole()
                         if len(self.activePlayer.getDeck()) == 0:

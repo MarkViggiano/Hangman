@@ -12,6 +12,7 @@ class Wild(Card):
             if colors.find(color) != -1:
                 card = Card(color, 100)
                 game.topCard = card
+                print("Next card color will be: {}".format(color))
                 selected = True
             else:
                 print("Invalid color!")

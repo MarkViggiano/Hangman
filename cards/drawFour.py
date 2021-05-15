@@ -1,4 +1,6 @@
 from cards.card import Card
+from cards.wild import Wild
+
 class DrawFour(Card):
     def __init__(self):
         super().__init__("Wild", "Four")
@@ -7,28 +9,24 @@ class DrawFour(Card):
 
         game.movePosition()
         player = game.players[game.position]
-        card1 = game.cards[1]
-        card2 = game.cards[2]
-        card3 = game.cards[3]
-        card4 = game.cards[4]
-        player.addCard(card1)
-        player.addCard(card2)
-        player.addCard(card3)
-        player.addCard(card4)
-        game.cards.remove(card1)
-        game.cards.remove(card2)
-        game.cards.remove(card3)
-        game.cards.remove(card4)
-        print("{} picked up 4 cards!\n".format(player.getName()))
+        cardLength = len(game.cards)
 
-        colors = "red, green, blue, yellow"
-        print("Please provide a valid color ({}) for the next card to be: ".format(colors))
-        selected = False
-        while not selected:
-            color = input().lower()
-            if colors.find(color) != -1:
-                card = Card(color, 100)
-                game.topCard = card
-                selected = True
-            else:
-                print("Invalid color!")
+        if cardLength == 0:
+            print("There are no cards to draw! Skipping {} instead...".format(player.getName()))
+            return
+
+        limit = 4
+        count = 0
+        for card in game.cards:
+            if card == game.topCard:
+                continue
+
+            if count >= limit:
+                break
+
+            player.addCard(card)
+            game.cards.remove(card)
+            count += 1
+
+        print("{} picked up {} cards!\n".format(player.getName(), count))
+        Wild().onPlay(game)
