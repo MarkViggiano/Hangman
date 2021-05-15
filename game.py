@@ -203,11 +203,12 @@ class Game():
                                 self.players.remove(self.activePlayer)
                                 if len(self.players) == 1:
                                     self.second = self.players[0]
+                                    self.third = "N/A"
                                     self.players.pop(0)
                                     break
                                 print("\n\nKeep playing for second and third place!")
                                 time.sleep(5)
-                            if self.second is not None:
+                            if self.second == None:
                                 print("SECOND PLACE:")
                                 print(self.activePlayer.getName())
                                 self.second = self.activePlayer.getName()
@@ -218,7 +219,7 @@ class Game():
                                     break
                                 print("\n\nKeep playing for third place!")
                                 time.sleep(5)
-                            if self.third is not None:
+                            if self.third == None:
                                 print("THIRD PLACE:")
                                 print(self.activePlayer.getName())
                                 self.third = self.activePlayer.getName()
