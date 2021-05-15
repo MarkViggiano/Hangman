@@ -116,6 +116,12 @@ class Game():
 
             cardCount += 1
 
+    def getNextSelectedCard(self):
+        if self.cards[0] == self.cardSelected:
+            return self.cards[1]
+
+        return self.cards[0]
+
     def playGame(self):
         self.clearConsole()
         print("Creating decks...")
@@ -125,7 +131,7 @@ class Game():
         if (self.topCard.color.lower() == "wild"):
             if (self.topCard.id.lower() == "four"):
                 self.movePosition(-1)
-            self.topCard.onPlay(this)
+            self.topCard.onPlay(self)
 
         while len(self.players) > 1:
             if self.winner is not None and self.second is not None and self.third is not None:
@@ -157,8 +163,9 @@ class Game():
                     if len(self.cards) < 1:
                         print("You cannot draw right now!") #prevent cheaters :)
                     else:
-                        self.activePlayer.addCard(self.cards[1])
-                        self.cards.pop(1) #faster to directly remove the index rather than object
+                        card = self.getNextSelectedCard()
+                        self.activePlayer.addCard(card)
+                        self.cards.remove(card)
                         self.clearConsole()
                         self.printTopCard()
                         print("\n" * 2)
@@ -183,7 +190,7 @@ class Game():
                         self.activePlayer.removeCard(card)
                         card.onPlay(self)
                         self.movePosition()
-                        self.cards.pop(0)
+                        self.cards.remove(card)
                         time.sleep(5)
                         self.clearConsole()
                         if len(self.activePlayer.getDeck()) == 0:
