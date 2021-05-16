@@ -1,5 +1,5 @@
 # Uno
-Python hangman game for school python class.
+Python Uno game for school python class.
 
 **How to play**
 Clone the repository and navigate to the save location using a command prompt. Type `python start.py` or `python3 start.py`
